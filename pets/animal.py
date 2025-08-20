@@ -5,6 +5,9 @@ class Animal:
     def speak(self):
         pass
 
+    def feed(self):
+        pass
+
     def get_name(self):
         return self.name
 

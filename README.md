@@ -31,7 +31,7 @@ If you only want to download it and test it
 
 Download the source code or clone the repo with:
 ```
-git clone LINK
+git clone https://github.com/AnyeloHernandez/OOPets
 ```
 
 Go to the project folder and the run the program:

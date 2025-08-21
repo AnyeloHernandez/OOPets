@@ -8,11 +8,11 @@ def main():
     print(dog.get_name())
     print(dog.speak())
     
-    app = OOPetApp()  # Sin controlador inicialmente
+    app = OOPetApp()
 
     controller = LogicController(app)
     app.controller = controller
-    app.initialize_ui()  # Inicializar UI después de asignar controlador
+    app.initialize_ui()
 
     app.mainloop()
 

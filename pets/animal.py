@@ -35,6 +35,10 @@ class Animal:
     
     def set_mood(self, new_mood):
         self.__mood = new_mood
+    
+    def get_image_path(self):
+        name = self.__class__.__name__.lower()
+        return f"pets/media/{name}.png"
 
 class PetCollection:
     def __init__(self):
@@ -44,13 +48,27 @@ class PetCollection:
     def add_pet(self, pet):
         self.pets.append(pet)
 
+    def get_pets_list(self):
+        return self.pets
+
     def get_current_pet(self):
+        current_index = self.current_pet_index
         if self.pets:
-            return self.pets[self.current_pet_index]
+            return self.pets[current_index]
         return None
     
     def next_pet(self):
-        pass
+        pets = self.get_pets_list()
+        current_index = self.current_pet_index
+        if current_index < len(pets) - 1:
+            self.current_pet_index += 1
+        else:
+            self.current_pet_index = 0 # Restart index        
 
     def previous_pet(self):
-        pass
+        pets = self.get_pets_list()
+        current_index = self.current_pet_index
+        if current_index > 0:
+            self.current_pet_index -= 1
+        else:
+            self.current_pet_index = len(pets) - 1

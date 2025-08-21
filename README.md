@@ -46,14 +46,15 @@ If you are starting on programming or learning how to work on someone else's cod
 1. Create a new file with the animal name on /pets
 2. Use inheritance to set the behavour of an Animal to your pet.
 3. Create your own custom methods of the class.
-4. To be continued..
+4. Add your drawing on pets/media/ (the size can be 320x400)
+5. Instanciate the pet on logic_controller and add it to the List.
 
 ## How to make a Pull Request on Github
 Now that you have a cute and friendly (or not) pet, you'll wonder how I can push my changes to the main repository. Do not fear, here's how you will do it.
 
 Since you Forked the repo before (I know you did it, I hope), now you have to make a Pull Request:
-1. Go to the main repository[linkhere xd]
+1. Go to the main [repository](https://github.com/AnyeloHernandez/OOPets)
 2. Go to Pull Requests
-3. Press on "New pull request" button (is green).
+3. Press on "New pull request" button (the green one).
 4. Select the main branch from the base repository and your branch from your repo and press Create pull request button.
-5. Describe what you changed and Publish.
+5. Describe what you changed and hit Publish.

@@ -1,2 +1,2 @@
-from .animal import Animal
+from .animal import Animal, PetCollection
 from .dog import Dog

@@ -5,6 +5,7 @@ def main():
     dog = Dog("Buddy")
     print(dog.get_name())
     print(dog.speak())
+    
     app = OOPetApp()
     app.mainloop()
 

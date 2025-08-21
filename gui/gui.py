@@ -25,7 +25,7 @@ class OOPetApp(Tk):
         self.create_pet_image_label()
         
     def create_feed_pet_button(self):
-        petButton = Button(self, text="Pet!", command=self.controller.handle_button_press)
+        petButton = Button(self, text="Feed!", command=self.controller.handle_button_press)
         petButton.place(x=20, y=460)
 
     def create_navigation_button(self):
@@ -75,7 +75,13 @@ class OOPetApp(Tk):
         self.pet_image_label.bind("<Button-1>", self.handle_image_click)
 
     def handle_image_click(self, event):
-        print("Pet image clicked!")
+        img_x = event.x + 128
+        img_y = event.y + 52
+        self.show_heart(img_x, img_y)
+
+        if self.controller:
+            # Handle mood change on controller
+            pass
 
     def update_pet_name_label(self, name):
         self.pet_name_label.config(text=name)
@@ -90,3 +96,17 @@ class OOPetApp(Tk):
             self.pet_image_label.image = petImage
         except Exception as e:
             print(f"Error loading pet image: {e}")
+
+    def show_heart(self, x, y):
+        heart = PhotoImage(file="pets/media/heart.png")
+        heart_label = Label(
+            self, 
+            image=heart, 
+            bg=self.cget('bg'),
+            borderwidth=0
+        )
+        heart_label.image = heart
+        heart_label.place(x=x, y=y)
+
+        # Make the heart disappear after 1 second
+        self.after(1000, heart_label.destroy)

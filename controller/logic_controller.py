@@ -11,9 +11,11 @@ class LogicController():
         # Add your pets here
         chiwi = Dog("Chiwis")
         piwi = Dog("Piwi")
+        penguin = Penguin("Mr.P")
         
         self.pet_collection.add_pet(chiwi)
         self.pet_collection.add_pet(piwi)
+        self.pet_collection.add_pet(penguin)
 
     def handle_previous_pet(self):
         self.pet_collection.previous_pet()

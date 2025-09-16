@@ -45,4 +45,4 @@ class LogicController():
         if pet:
             self.view.update_pet_name_label(pet.get_name())
             self.view.update_pet_hunger_label(pet.get_hunger())
-            self.view.update_pet_image_label(pet.get_image_path())
+            self.view.update_pet_image(pet.get_image_path())

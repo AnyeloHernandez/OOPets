@@ -1,6 +1,11 @@
-from tkinter import Tk, Button, Label, PhotoImage
+from tkinter import Tk, Button, Label, PhotoImage, Canvas
 
 GAME_TITLE = "OOPet App!"
+WINDOW_WIDTH = 640
+WINDOW_HEIGHT = 512
+
+HEART_LINGER_TIME_MS = 1000
+
 
 class OOPetApp(Tk):
     def __init__(self, controller=None):
@@ -9,21 +14,27 @@ class OOPetApp(Tk):
         self.controller = controller
 
         self.title(GAME_TITLE)
-        self.geometry("640x512")
+        self.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
         self.resizable(width=False, height=False)
+
+        # Add a Canvas
+        self.canvas = Canvas(self, width=640, height=512, highlightthickness=0)
+        self.canvas.place(x=0, y=0)
 
         self.pet_name_label = None
         self.pet_hunger_label = None
         self.pet_happiness_label = None
-        self.pet_image_label = None
-  
+        self.pet_image_id = None  # Holds a reference to the pet image
+        self.pet_image = None
+        self.__hearts = []  # Holds each visible heart
+
     def initialize_ui(self):
         self.create_feed_pet_button()
         self.create_navigation_button()
         self.create_pet_name_label()
         self.create_pet_hunger_label()
-        self.create_pet_image_label()
-        
+        self.create_pet_image()
+
     def create_feed_pet_button(self):
         petButton = Button(self, text="Feed!", command=self.controller.handle_button_press)
         petButton.place(x=20, y=460)
@@ -57,27 +68,23 @@ class OOPetApp(Tk):
 
         self.pet_hunger_label.place(x=540, y=40)
 
+    def create_pet_image(self):
+        # Load the pet image
+        pet_file_path = self.controller.get_current_pet().get_image_path()
+        self.pet_image = PhotoImage(file=pet_file_path)
 
-    def create_pet_image_label(self):
-        petFilePath = self.controller.get_current_pet().get_image_path()
-        petImage = PhotoImage(file=petFilePath)
-        self.pet_image_label = Label(self, image=petImage)
-        self.pet_image_label.image = petImage
+        # Window center coordinates
+        x = WINDOW_WIDTH // 2
+        y = WINDOW_HEIGHT // 2
 
-        width = 640
-        heigh = 512
-        img_width, img_heigh = petImage.width(), petImage.height()
+        # Paint the pet image onto the canvas, and save its ID for later reference
+        self.pet_image_id = self.canvas.create_image(x, y, image=self.pet_image, anchor="center")
 
-        x = (width - img_width) // 2
-        y = (heigh - img_heigh) // 2
-
-        self.pet_image_label.place(x=x, y=y)
-        self.pet_image_label.bind("<Button-1>", self.handle_image_click)
+        # Connect clicking on the image (on the canvas) to image handling
+        self.canvas.tag_bind(self.pet_image_id, "<Button-1>", self.handle_image_click)
 
     def handle_image_click(self, event):
-        img_x = event.x + 128
-        img_y = event.y + 52
-        self.show_heart(img_x, img_y)
+        self.show_heart(event.x, event.y)
 
         if self.controller:
             # Handle mood change on controller
@@ -89,24 +96,31 @@ class OOPetApp(Tk):
     def update_pet_hunger_label(self, hunger):
         self.pet_hunger_label.config(text=f"{hunger}/10")
 
-    def update_pet_image_label(self, image_path):
+    def update_pet_image(self, image_path):
         try:
-            petImage = PhotoImage(file=image_path)
-            self.pet_image_label.config(image=petImage)
-            self.pet_image_label.image = petImage
+            # Load the new image
+            self.pet_image = PhotoImage(file=image_path)
+
+            # Update the canvas image
+            self.canvas.itemconfig(self.pet_image_id, image=self.pet_image)
+
         except Exception as e:
             print(f"Error loading pet image: {e}")
 
     def show_heart(self, x, y):
-        heart = PhotoImage(file="pets/media/heart.png")
-        heart_label = Label(
-            self, 
-            image=heart, 
-            bg=self.cget('bg'),
-            borderwidth=0
-        )
-        heart_label.image = heart
-        heart_label.place(x=x, y=y)
+        # Load the heart image
+        heart = PhotoImage(file="pets/media/color_heart.png")
 
-        # Make the heart disappear after 1 second
-        self.after(1000, heart_label.destroy)
+        # Paint the heart to the Canvas
+        heart_id = self.canvas.create_image(x, y, image=heart, anchor="center")
+
+        # Store the heart temporarily (prevents garbage collection)
+        self.__hearts.append((heart_id, heart))
+
+        def remove_heart():
+            # Remove the heart from the canvas and from temporary storage
+            self.canvas.delete(heart_id)
+            self.__hearts = [(hid, h) for hid, h in self.__hearts if hid != heart_id]
+
+        # Remove the heart after 1 second
+        self.after(HEART_LINGER_TIME_MS, remove_heart)

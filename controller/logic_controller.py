@@ -39,6 +39,13 @@ class LogicController():
         current_pet = self.pet_collection.get_current_pet()
         if current_pet:
             print(f"Interacting with {current_pet.get_name()}: {current_pet.speak()}")
+            
+    def handle_feed(self):
+        current_pet = self.pet_collection.get_current_pet()
+        if current_pet:
+            current_pet.feed()
+            self.update_view()
+            print(f"Feeding {current_pet.get_name()}: {current_pet.speak()}")       
 
     def update_view(self):
         pet = self.pet_collection.get_current_pet()

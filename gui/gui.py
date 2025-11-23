@@ -36,7 +36,7 @@ class OOPetApp(Tk):
         self.create_pet_image()
 
     def create_feed_pet_button(self):
-        petButton = Button(self, text="Feed!", command=self.controller.handle_button_press)
+        petButton = Button(self, text="Feed!", command=self.controller.handle_feed)
         petButton.place(x=20, y=460)
 
     def create_navigation_button(self):

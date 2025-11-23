@@ -12,7 +12,7 @@ class Soot(Animal):
     
     def feed(self):
         self.action = "eat"
-        super().feed
+        super().feed()
         
     def pet(self):
         self.action = self.mood_list[self.get_mood()]

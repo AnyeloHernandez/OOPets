@@ -87,6 +87,7 @@ class OOPetApp(Tk):
         self.show_heart(event.x, event.y)
 
         if self.controller:
+            self.controller.handle_pet()
             # Handle mood change on controller
             pass
 

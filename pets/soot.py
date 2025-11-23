@@ -4,9 +4,14 @@ class Soot(Animal):
     def __init__(self, name: str):
         super().__init__(name)
         self.image_folder_path = "pets/media/soot/"
+        self.action = "idle"
         
     def speak(self):
         return "*Soot sprite noises*"
     
+    def feed(self):
+        self.action = "eat"
+        super().feed
+    
     def get_image_path(self):
-        return self.image_folder_path + "idle.png" 
+        return self.image_folder_path + self.action + ".png" 

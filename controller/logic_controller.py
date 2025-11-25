@@ -14,12 +14,14 @@ class LogicController():
         penguin = Penguin("Mr.P")
         honguito = Mushroom("Honguito")
         whiskers = Cat("Whiskers")
+        soot = Soot("soot")
         
         self.pet_collection.add_pet(chiwi)
         self.pet_collection.add_pet(piwi)
         self.pet_collection.add_pet(penguin)
         self.pet_collection.add_pet(honguito)
         self.pet_collection.add_pet(whiskers)
+        self.pet_collection.add_pet(soot)
 
     def handle_previous_pet(self):
         self.pet_collection.previous_pet()

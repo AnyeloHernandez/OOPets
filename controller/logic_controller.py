@@ -62,3 +62,14 @@ class LogicController():
             self.view.update_pet_name_label(pet.get_name())
             self.view.update_pet_hunger_label(pet.get_hunger())
             self.view.update_pet_image(pet.get_image_path())
+            
+    def tick(self):
+        pet = self.pet_collection.get_current_pet()
+        if pet:
+            pet.set_hunger(pet.get_hunger() - 1)
+            
+            # This line finds a corresponding mood to the current hunger
+            # The idea is creating ranges of hunger and picking the range the current hunger is in
+            pet.set_mood( int((animal.MAX_MOOD + 1) * pet.get_hunger() / animal.MAX_HUNGER) )
+            
+            self.update_view()

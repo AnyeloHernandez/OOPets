@@ -5,6 +5,7 @@ WINDOW_WIDTH = 640
 WINDOW_HEIGHT = 512
 
 HEART_LINGER_TIME_MS = 1000
+TICK_TIME_MS = 10000
 
 
 class OOPetApp(Tk):
@@ -27,6 +28,8 @@ class OOPetApp(Tk):
         self.pet_image_id = None  # Holds a reference to the pet image
         self.pet_image = None
         self.__hearts = []  # Holds each visible heart
+        
+        self.tick()
 
     def initialize_ui(self):
         self.create_feed_pet_button()
@@ -125,3 +128,8 @@ class OOPetApp(Tk):
 
         # Remove the heart after 1 second
         self.after(HEART_LINGER_TIME_MS, remove_heart)
+        
+    def tick(self):
+        if self.controller:
+            self.controller.tick()
+        self.after(TICK_TIME_MS, self.tick)

@@ -28,13 +28,13 @@ class Animal:
         return self.__hunger
     
     def set_hunger(self, hunger):
-        self.__hunger = hunger
+        self.__hunger = max(0, hunger)
 
     def get_mood(self):
         return self.__mood
     
     def set_mood(self, new_mood):
-        self.__mood = new_mood
+        self.__mood = max(0, new_mood)
     
     def get_image_path(self):
         name = self.__class__.__name__.lower()

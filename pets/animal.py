@@ -11,11 +11,11 @@ class Animal:
         raise NotImplementedError("Subclasses must implement this method")
 
     def feed(self):
-        self.__hunger += 1 if self.__mood <= MAX_HUNGER else self.__hunger
+        self.__hunger += 1 if self.__hunger < MAX_HUNGER else 0
         return self.__hunger
 
     def pet(self):
-        self.__mood += 1 if self.__mood <= MAX_MOOD else self.__mood
+        self.__mood += 1 if self.__mood < MAX_MOOD else 0
         return self.__mood
 
     def get_name(self):
